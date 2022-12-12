@@ -14,10 +14,10 @@ function HomePage() {
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} style={{ padding: 50 }}>
       <Grid container spacing={2}>
-        {products.map((product) => (
-          <Grid item xs={6} md={3}>
+        {products.map((product, index) => (
+          <Grid item xs={6} md={3} key={index}>
             <ProductCard key={product.productId} product={product} />
           </Grid>
         ))}

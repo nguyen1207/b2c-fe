@@ -6,6 +6,7 @@ export const getProducts = async (page = 1) => {
 };
 
 export const getProductById = async (id) => {
+  console.log(id);
   await wait(0);
   return api.get("products/" + id);
 };
