@@ -27,7 +27,7 @@ function ResponsiveAppBar() {
       const decoded = jwt_decode(token);
       setProfile(decoded);
     }
-  }, []);
+  }, [setProfile]);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -169,8 +169,12 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Logged in as: {profile?.username}</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
                 <Typography
                   textAlign="center"
+                  width="100%"
                   onClick={() => {
                     localStorage.removeItem("b2c-token");
                     setProfile(null);
