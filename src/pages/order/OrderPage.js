@@ -28,62 +28,71 @@ function OrderPage() {
   const [orders, setOrders] = React.useState([]);
 
   React.useEffect(() => {
-    ordersByUsername(profile.username).then((response) => {
-      setOrders(response.docs);
-    });
+    if (!profile) return;
+    ordersByUsername(profile.username)
+      .then((response) => {
+        setOrders(response.docs);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
-    <div className="App">
-      <div
-        className="head"
-        style={{
-          width: "fit-content",
-          margin: "auto",
-        }}
-      >
-        <h1
-          style={{
-            color: "green",
-          }}
-        >
-          Orders
-        </h1>
-      </div>
-      <br />
-      <center>
-        <Box
-          sx={{
-            width: "100%",
-            maxWidth: "80%",
-            bgcolor: "background.paper",
-          }}
-        >
-          <nav>
-            <List>
-              <ListItem divider>
-                <ListItemText primary="Ordered at" />
-                <ListItemText primary="Order status" />
-                <ListItemText primary="Total" />
-                <ListItemText primary="Payment type" />
-                <ListItemText primary="Payment status" />
-              </ListItem>
-              {orders.map((order) => (
-                <ListItem divider to={`/orders/${order.orderId}`} component={Link} key={order.orderId}>
-                  <ListItem>
-                    <ListItemText primary={new Date(+order.createdAt).toLocaleString()} />
-                    <ListItemText primary={orderStatus[order.orderStatus]} />
-                    <ListItemText primary={order.totalPrice + " VND"} />
-                    <ListItemText primary={paymentType[order.paymentType]} />
-                    <ListItemText primary={paymentStatus[order.paymentStatus]} />
+    <>
+      {profile ? (
+        <div className="App">
+          <div
+            className="head"
+            style={{
+              width: "fit-content",
+              margin: "auto",
+            }}
+          >
+            <h1
+              style={{
+                color: "green",
+              }}
+            >
+              Orders
+            </h1>
+          </div>
+          <br />
+          <center>
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: "80%",
+                bgcolor: "background.paper",
+              }}
+            >
+              <nav>
+                <List>
+                  <ListItem divider>
+                    <ListItemText style={{ width: 100 }} primary="Ordered at" />
+                    <ListItemText style={{ width: 100 }} primary="Order status" />
+                    <ListItemText style={{ width: 100 }} primary="Total" />
+                    <ListItemText style={{ width: 100 }} primary="Payment type" />
+                    <ListItemText style={{ width: 100 }} primary="Payment status" />
                   </ListItem>
-                </ListItem>
-              ))}
-            </List>
-          </nav>
-        </Box>
-      </center>
-    </div>
+                  {orders.map((order) => (
+                    <ListItem divider to={`/orders/${order.orderId}`} component={Link} key={order.orderId}>
+                      <ListItem>
+                        <ListItemText style={{ width: 100 }} primary={new Date(+order.createdAt).toLocaleString()} />
+                        <ListItemText style={{ width: 100 }} primary={orderStatus[order.orderStatus]} />
+                        <ListItemText style={{ width: 100 }} primary={order.totalPrice + " VND"} />
+                        <ListItemText style={{ width: 100 }} primary={paymentType[order.paymentType]} />
+                        <ListItemText style={{ width: 100 }} primary={paymentStatus[order.paymentStatus]} />
+                      </ListItem>
+                    </ListItem>
+                  ))}
+                </List>
+              </nav>
+            </Box>
+          </center>
+        </div>
+      ) : (
+        <h2 style={{ padding: 32 }}>Please login</h2>
+      )}
+    </>
   );
 }
 

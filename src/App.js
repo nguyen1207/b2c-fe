@@ -3,6 +3,7 @@ import "./App.css";
 import { MainProvider } from "./contexts/MainContext";
 import ResponsiveAppBar from "./layouts/ResponsiveAppBar";
 import CartPage from "./pages/cart/CartPage";
+import CheckoutPage from "./pages/checkout/CheckoutPage";
 import HomePage from "./pages/home/HomePage";
 import LoginPage from "./pages/login/LoginPage";
 import OrderDetailsPage from "./pages/order/OrderDetailsPage";
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/products/:productId" element={<ProductPage />} />
           <Route path="/orders" element={<OrderPage />} />
           <Route path="/orders/:orderId" element={<OrderDetailsPage />} />

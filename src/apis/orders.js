@@ -18,3 +18,12 @@ export const getOrderDetails = async (id) => {
     },
   });
 };
+
+export const createOrder = async (payload) => {
+  await wait(0);
+  return api.post("orders", payload, {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("b2c-token"),
+    },
+  });
+};

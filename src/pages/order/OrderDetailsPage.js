@@ -19,6 +19,7 @@ function OrderDetailsPage() {
     paymentType: "",
     paymentStatus: "",
     totalPrice: "",
+    shippingCost: "",
     order_rows: [
       {
         productId: "",
@@ -61,7 +62,8 @@ function OrderDetailsPage() {
           <h2>Order status: {orderStatus[orderDetails.orderStatus]} </h2>
           <h2>Payment type: {paymentType[orderDetails.paymentType]} </h2>
           <h2>Payment status: {paymentStatus[orderDetails.paymentStatus]} </h2>
-          <h2>Total price: {orderDetails.totalPrice} VND</h2>
+          <h2>Shipping cost: {orderDetails.shippingCost} VND</h2>
+          <h2>Total price: {Number(orderDetails.totalPrice) + Number(orderDetails.shippingCost)} VND</h2>
         </Grid>
         <Grid item xs={12} lg={6}>
           <List>
@@ -74,7 +76,7 @@ function OrderDetailsPage() {
               <ListItem divider key={order_row.productId} style={{ alignItems: "center", justifyContent: "center" }}>
                 <ListItemText primary={order_row.product.name} style={{ width: 100 }} />
                 <ListItemText style={{ width: 100, alignContent: "center" }} primary={order_row.quantity} />
-                <ListItemText style={{ width: 100 }} primary={order_row.product.price} VND />
+                <ListItemText style={{ width: 100 }} primary={order_row.product.price + " VND"} />
               </ListItem>
             ))}
           </List>

@@ -1,11 +1,12 @@
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 import { getProductsByIds } from "../../apis/products";
 
 function CartPage() {
-  const cart = JSON.parse(localStorage.getItem("cart"));
+  const cart = JSON.parse(localStorage.getItem("cart")) || {};
   const [total, setTotal] = React.useState(0);
   const [cartRows, setCartRows] = React.useState([
     {
@@ -20,6 +21,7 @@ function CartPage() {
   const productIds = Object.keys(cart);
 
   React.useEffect(() => {
+    if (productIds.length === 0) return;
     getProductsByIds(productIds).then((data) => {
       const rows = [];
       data.forEach((product) => {
@@ -45,15 +47,27 @@ function CartPage() {
   ];
 
   return (
-    <div style={{ height: "500px", width: "90%", padding: 50 }}>
-      <DataGrid rows={cartRows} columns={cartColumns} hideFooterPagination hideFooterSelectedRowCoun />
-      <span style={{ float: "right", fontWeight: "bold", fontSize: 24 }}>Total: {total} ₫</span>
-      <br />
-      <br />
-      <Button variant="contained" color="primary" style={{ marginTop: 20, float: "right" }}>
-        Order
-      </Button>
-    </div>
+    <>
+      {productIds.length !== 0 ? (
+        <div style={{ height: "500px", width: "90%", padding: 50 }}>
+          <DataGrid rows={cartRows} columns={cartColumns} hideFooterPagination hideFooterSelectedRowCoun />
+          <span style={{ float: "right", fontWeight: "bold", fontSize: 24 }}>Total: {total} ₫</span>
+          <br />
+          <br />
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginTop: 20, float: "right" }}
+            component={Link}
+            to="/checkout"
+          >
+            Checkout
+          </Button>
+        </div>
+      ) : (
+        <h2 style={{ padding: 32 }}>Empty cart</h2>
+      )}
+    </>
   );
 }
 
