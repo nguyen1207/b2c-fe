@@ -101,7 +101,7 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={handleCloseNavMenu} component={Link} to={`/${page}`}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -111,7 +111,6 @@ function ResponsiveAppBar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
             href=""
             sx={{
               mr: 2,
@@ -123,8 +122,10 @@ function ResponsiveAppBar() {
               color: "inherit",
               textDecoration: "none",
             }}
+            component={Link}
+            to="/"
           >
-            LOGO
+            NGUYEN KHOA
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (

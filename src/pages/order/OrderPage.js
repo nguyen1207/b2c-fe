@@ -3,11 +3,12 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ordersByUsername } from "../../apis/orders";
 import { useMainContext } from "../../contexts/MainContext";
 
 function OrderPage() {
+  const navigate = useNavigate();
   const orderStatus = {
     1: "Pending",
     2: "Delivering",
@@ -33,7 +34,13 @@ function OrderPage() {
       .then((response) => {
         setOrders(response.docs);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        if (err.response.data.message === "User is not authenticated") {
+          localStorage.removeItem("b2c-token");
+          navigate("/login");
+        }
+      });
   }, []);
 
   return (
